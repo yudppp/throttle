@@ -7,11 +7,11 @@ import (
 	"github.com/yudppp/throttle"
 )
 
-const throttleDuration = time.Second * 5
-const testInterval = time.Second * 6
+const throttleDuration = time.Second * 2
+const testInterval = time.Second * 3
 
 func TestThrottle(t *testing.T) {
-	throttler := throttle.New(time.Second)
+	throttler := throttle.New(throttleDuration)
 
 	cnt := 0
 	// once test
@@ -41,7 +41,7 @@ func TestThrottle(t *testing.T) {
 	// conflict test
 	for i := 0; i < 8; i++ {
 		go func() {
-			for j := 0; j < 8; j++ {
+			for j := 0; j < 16; j++ {
 				throttler.Do(func() {
 					cnt++
 				})
