@@ -28,13 +28,12 @@ func (t *throttle) Do(f func()) {
 	t.m.Lock()
 	defer t.m.Unlock()
 	t.once.Do(func() {
-		reset := func() {
+		go func() {
+			time.Sleep(t.duration)
 			t.m.Lock()
 			defer t.m.Unlock()
-			time.Sleep(t.duration)
 			t.once = sync.Once{}
-		}
-		go reset()
+		}()
 		f()
 	})
 }
