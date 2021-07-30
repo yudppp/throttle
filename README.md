@@ -1,6 +1,6 @@
 # throttle
 
-throtting function called
+throttling function called
 sync.Once like interface
 
 ```go
