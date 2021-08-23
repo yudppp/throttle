@@ -13,7 +13,6 @@ func SomeFunc() {
 }
 ```
 
-
 ## License
 
-[The MIT License (MIT)](http://yudppp.mit-license.org/)
+[The MIT License (MIT)](https://github.com/yudppp/throttle/blob/master/LICENSE)
