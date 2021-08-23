@@ -7,18 +7,19 @@ import (
 )
 
 // Throttle is an object that will perform exactly one action per duration.
+// Do call the function f if a specified duration has passed
+// since the last function f was called for this instance of Throttle.
+// In other words, given
+// 	var throttle = Throttle.New(time.Minute)
+// if throttle.Do(f) is called multiple times within a minute, only the first call will invoke f,
+// even if f has a different value in each invocation.
+// Waiting for a minute or a new instance of Throttle is required for each function to execute.
 type Throttler interface {
-	// Do call the function f if a specified duration has passed
-	// since the last function f was called for this instance of Throttle.
-	// In other words, given
-	// 	var throttle = Throttle.New(time.Minute)
-	// if throttle.Do(f) is called multiple times within a minute, only the first call will invoke f,
-	// even if f has a different value in each invocation.
-	// Waiting for a minute or a new instance of Throttle is required for each function to execute.
 	Do(f func())
 }
 
-// New is create Throttler instance
+// New create a new Throttler. The duration variable sets the
+// duration to restrict Do function argument function f.
 func New(duration time.Duration) Throttler {
 	return &throttle{
 		duration: duration,
