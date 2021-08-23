@@ -1,3 +1,4 @@
+![test workflow](https://github.com/yudppp/throttle/actions/workflows/test.yml/badge.svg)
 # throttle
 
 Throttle is an object that will perform exactly one action per duration.
