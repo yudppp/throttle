@@ -4,16 +4,47 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/yudppp/throttle)](https://goreportcard.com/report/github.com/yudppp/throttle)
 
 Throttle is an object that will perform exactly one action per duration.
+Do call the function f if a specified duration has passed since the last function f was called for this instance of Throttle.
+
+## example
+
+[go playground](https://play.golang.org/p/lV2kkaqklTV)
 
 ```go
-var throttler = throttle.New(time.Second*5)
+package main
 
-func SomeFunc() {
-    throttler.Do(func(){
-        fmt.Println("run")
-    })
+import (
+	"fmt"
+	"time"
+
+	"github.com/yudppp/throttle"
+)
+
+func main() {
+	throttler := throttle.New(time.Second)
+	throttler.Do(func() {
+		fmt.Println("first call")
+	})
+	throttler.Do(func() {
+		// this function called never.
+		fmt.Println("second call")
+	})
+	time.Sleep(time.Second)
+	throttler.Do(func() {
+		fmt.Println("third call")
+	})
+	time.Sleep(time.Second)
 }
 ```
+
+### output
+
+```
+first call
+third call
+```
+
+
 
 ## License
 
