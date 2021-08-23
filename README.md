@@ -6,6 +6,9 @@
 Throttle is an object that will perform exactly one action per duration.
 Do call the function f if a specified duration has passed since the last function f was called for this instance of Throttle.
 
+<img width="555" alt="Group 38" src="https://user-images.githubusercontent.com/4619802/130442984-a4eea804-a52d-46d5-83b0-9f55d62760a2.png">
+
+
 ## example
 
 [go playground](https://play.golang.org/p/lV2kkaqklTV)
