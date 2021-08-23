@@ -1,7 +1,6 @@
 # throttle
 
-throttling function called
-sync.Once like interface
+Throttle is an object that will perform exactly one action per duration.
 
 ```go
 var throttler = throttle.New(time.Second*5)
