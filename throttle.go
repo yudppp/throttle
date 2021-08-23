@@ -1,4 +1,4 @@
-// throttle is function throttling package
+// Package throttle is function throttling package
 package throttle
 
 import (
@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// Throttle is an object that will perform exactly one action per duration.
+// Throttler is an interface that will perform exactly one action per duration.(should use New constructor only)
 // Do call the function f if a specified duration has passed
 // since the last function f was called for this instance of Throttle.
 // In other words, given
