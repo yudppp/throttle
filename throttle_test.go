@@ -1,6 +1,7 @@
 package throttle_test
 
 import (
+	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -37,20 +38,24 @@ func TestThrottle(t *testing.T) {
 		t.Errorf("cnt should be 2, but %d", cnt)
 	}
 
-	time.Sleep(testInterval)
+}
 
-	// conflict test
-	for i := 0; i < 8; i++ {
-		go func() {
-			for j := 0; j < 16; j++ {
-				throttler.Do(incrementCount)
-			}
-		}()
+func TestThrottleFromGoroutines(t *testing.T) {
+	throttler := throttle.New(throttleDuration)
+	cnt := uint64(0)
+	incrementCount := func() {
+		atomic.AddUint64(&cnt, 1)
 	}
-
-	time.Sleep(testInterval)
-
-	if cnt != 3 {
-		t.Errorf("cnt should be 3, but %d", cnt)
+	var wg sync.WaitGroup
+	for i := 0; i < 64; i++ {
+		wg.Add(1)
+		go func(i int) {
+			throttler.Do(incrementCount)
+			wg.Done()
+		}(i)
+	}
+	wg.Wait()
+	if cnt != 1 {
+		t.Errorf("cnt should be 1, but %d", cnt)
 	}
 }
